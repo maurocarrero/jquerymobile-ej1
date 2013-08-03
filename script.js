@@ -1,38 +1,72 @@
-
 $(document).ready(function(){
 
 	var clientes = cargarDatos();
+	cargarDetalles(clientes[0]);
 
 	for (var i=0; i < clientes.length; i++) {
-		// $("ul#clientes").append("<li><a href='#pag2?id=" + clientes[i].id + "'>" + clientes[i].nombre + "</a></li>");
 
 		var li = $("<li/>");
+		li.addClass("cliente");
 		var anchor = $("<a/>", {
 			href: "#",
 			text: clientes[i].nombre
 		});
-
+		anchor.data("id", clientes[i].id);
 		anchor.appendTo(li);
 		li.appendTo("ul#clientes");
 		$("ul#clientes").listview("refresh");
-		anchor.data("id", clientes[i].id);
 	}
 
-	/* 
-		Refresh: para agregar las clases a los elementos
-		agregados dinámicamente
-	*/
-	
-	
+	$("li.cliente").on("click", "a", function(){
+		var id = $(this).data("id");
+		console.log("id: " + id);
+		for (var j=0; j < clientes.length; j++) {
+			if (clientes[j].id == id) {
+				console.log("id del array: " + clientes[j].id);
+				cargarDetalles(clientes[j]);
+				break;
+			}
+		}
+		$.mobile.changePage("#pag2");
+	});
 });
 
+
+function cargarDetalles(cliente)
+{
+	var detalles = $(".detallescliente");
+	detalles.empty();
+	detalles.data("id", cliente.id);
+	var nombre = $("<div/>", {
+		text: "Nombre: " + cliente.nombre
+	});
+	var edad = $("<div/>", {
+		text: "Edad: " + cliente.edad
+	});
+	var sexo = $("<div/>", {
+		text: "Sexo: " + devolverSexo(cliente.sexo)
+	});
+
+	nombre.appendTo(detalles);
+	edad.appendTo(detalles);
+	sexo.appendTo(detalles);
+}
+
+function devolverSexo(sexo)
+{
+	if (sexo == "M")
+		return "Masculino";
+	if (sexo == "F")
+		return "Femenino";
+	return "WTF!";
+}
 
 function cargarDatos()
 {
 	var clientes = new Array();
 
 	var cli1 = { id: 1, nombre: "Lucas Domínguez", edad: '10', sexo: 'M' };
-	var cli2 = { id: 2, nombre: "Mauro Carrero", edad: '4', sexo: 'M' };
+	var cli2 = { id: 2, nombre: "Mauro Carrero", edad: '36', sexo: 'M' };
 	var cli3 = { id: 3, nombre: "Pepe Corvina", edad: '60', sexo: 'M' };
 	var cli4 = { id: 4, nombre: "Juana de Ibarbourou", edad: '32', sexo: 'F' }; 
 	var cli5 = { id: 5, nombre: "Marguerite Duras", edad: '25', sexo: 'F' };
