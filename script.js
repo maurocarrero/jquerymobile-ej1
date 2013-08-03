@@ -15,7 +15,7 @@ function cargarDatos()
 {
 	var clientes = new Array();
 
-	clientes[0] = "Daniel Bonfiglio";
+	clientes[0] = "Lucas Domínguez";
 	clientes[1] = "Mauro Carrero";
 	clientes[2] = "Pepe Corvina";
 	clientes[3] = "Toto Mendez";
